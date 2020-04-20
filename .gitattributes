@@ -1,0 +1,24 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Unix line-endings on files
+*.tf   text eol=lf
+*.pem  text eol=lf
+*.jmx  text eol=lf
+*.sh   text eol=lf
+*.sld  text eol=lf
+*.sql  text eol=lf
+*.txt  text eol=lf
+*.yaml text eol=lf
+*.erb  text eol=lf
+**/files/** text eol=lf
+**/templates/**  text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.pdf  binary
+*.png  binary
+*.png  binary
+*.jpg  binary
+*.zip  binary
+*.dff  binary
+*.gz   binary
