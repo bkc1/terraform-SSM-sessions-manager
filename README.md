@@ -2,7 +2,7 @@
 
 ## Overview
 
-Simple demo that highlights how to utilize SSM Sessions Manager to connect to an EC2 instance is a completely isolated subnet, with no access to the internet(no IGW or NAT). This is accomplished by using VPC endpoints, specifically (Privatelink) interface endpoints and an S3 Gateway endpoint(for logging).
+Simple demo that highlights how to utilize SSM Sessions Manager to connect to an EC2 (Spot) instance in a completely isolated subnet, with no access to the internet(no IGW or NAT). This is accomplished by using VPC endpoints, specifically (Privatelink) interface endpoints and an S3 Gateway endpoint(for logging).
 
 ### Logging session data
 - As of April 2020, APIs for enabling Sessions Manager audit logs to S3/Cloudwatch logs are not currently available and thus this could not be automated with Terraform. This project deploys the resources needed to quickly configure encrypted audit logging to S3 as noted [here](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging-auditing.html#session-manager-logging-auditing-s3)  
@@ -37,7 +37,7 @@ $ terraform destroy
 ```
 ### Connecting to the test EC2 instance
 #### Via SSM CLI
-Note instance ID from Terraform output
+Note instance ID from Terraform output. The instance might need a minute or two to initialize after Terraform completes before a connection can be made with Sessions Manager.
 
 ```
 $ aws ssm start-session --target <instance_id> --region <region>

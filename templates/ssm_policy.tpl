@@ -25,6 +25,13 @@
         {
             "Effect": "Allow",
             "Action": [
+                "ec2:CreateTags"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "s3:PutObject"
             ],
             "Resource": "arn:aws:s3:::${bucket}/${region}/*"

@@ -34,8 +34,6 @@ data "aws_iam_policy" "managedssm" {
 resource "aws_iam_role_policy_attachment" "managedssm" {
   role       = "${aws_iam_role.demo.name}"
   policy_arn = "${data.aws_iam_policy.managedssm.arn}"
-#  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-
 }
 
 # Needed specific for Sessions Mgr logging via S3/CW. Added S3 readonly (List/Get) on * for demo purposes.
@@ -59,11 +57,9 @@ resource "aws_iam_role_policy_attachment" "demo" {
 
 
 
-# test/demo instance
-resource "aws_instance" "demo1" {
-  tags                    = {
-    Name                  = "${var.app_prefix}-${var.env}-test1"
-  }
+# test/demo spot instance
+resource "aws_spot_instance_request" "demo1" {
+  wait_for_fulfillment    = true
   instance_type           = "t2.micro"
   ami                     = "${data.aws_ami.amznlinux2.id}"
   key_name                = "${aws_key_pair.auth.id}"
@@ -73,5 +69,11 @@ resource "aws_instance" "demo1" {
   root_block_device {
     delete_on_termination = true
     volume_type           = "standard"
+  }
+  provisioner "local-exec" {
+    command = "aws ec2 create-tags --resources ${self.spot_instance_id} --tags Key=Name,Value=demo1 --region ${var.aws_region}"
+  }
+  tags                    = {
+    Name                  = "${var.app_prefix}-${var.env}-demo1"
   }
 }
