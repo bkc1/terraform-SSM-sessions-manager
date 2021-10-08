@@ -25,24 +25,9 @@
         {
             "Effect": "Allow",
             "Action": [
-                "ec2:CreateTags"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
                 "s3:PutObject"
             ],
             "Resource": "arn:aws:s3:::${bucket}/${region}/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-               "s3:Get*",
-               "s3:List*"
-            ],
-            "Resource": "*"
         },
         {
             "Effect": "Allow",
@@ -53,8 +38,18 @@
         },
         {
             "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": "${key_arn}"
+        },
+        {
+            "Effect": "Allow",
             "Action": "kms:GenerateDataKey",
             "Resource": "*"
         }
     ]
 }
+
+
+
