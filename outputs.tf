@@ -8,9 +8,5 @@ output "key_id" {
 }
 
 output "secret_key" {
-  value = aws_iam_access_key.demo.encrypted_secret
-}
-
-output "aws_iam_smtp_password_v4" {
   value = aws_iam_access_key.demo.ses_smtp_password_v4
 }

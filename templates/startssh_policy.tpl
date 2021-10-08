@@ -9,6 +9,18 @@
                 "arn:aws:ssm:*::document/AWS-StartSSHSession",
                 "arn:aws:ec2:*:${account_id}:instance/*"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": "${key_arn}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "kms:GenerateDataKey",
+            "Resource": "*"
         }
     ]
 }

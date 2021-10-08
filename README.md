@@ -74,3 +74,25 @@ Install Apache on the instance and start HTTPD, before this cmd.
 ```
 aws ssm start-session --target <instance_id> --document-name AWS-StartPortForwardingSession  --parameters '{"portNumber":["80"], "localPortNumber":["8000"]}' --region <region>
 ```
+
+### SSM Retricting user access via IAM
+Terraform generates an IAM user called `RestrictedUser` which only has IAM permissions to initiate an SSM session to EC2 instances.
+
+#### Create a AWScli profile
+Copy the IAM user `key_id` and `secret_key` from the Terraform outputs and use them to create a AWScli profile.
+```
+aws configure --profile SSMrestricteduser
+AWS Access Key ID [****************E6UT]:
+AWS Secret Access Key [****************ffwz]:
+Default region name [us-west-2]:
+Default output format [json]:
+```
+
+#### Connect to EC2 via SSM as SSMRestrictedUser
+```
+aws ssm start-session --target <instance_id> --region <region> --profile SSMRestrictedUser
+
+Starting session with SessionId: RestrictedUser-011bf5e0b061e3c67
+This session is encrypted using AWS KMS.
+
+```

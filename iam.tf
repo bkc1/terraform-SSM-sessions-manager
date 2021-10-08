@@ -67,6 +67,7 @@ data "template_file" "startSSH-tpl" {
   template = file("${path.root}/templates/startssh_policy.tpl")
   vars = {
     account_id = data.aws_caller_identity.current.account_id
+    key_arn = aws_kms_key.cwkey.arn
   }
 }
 
