@@ -9,4 +9,5 @@ output "key_id" {
 
 output "secret_key" {
   value = aws_iam_access_key.demo.secret
+  sensitive = true
 }

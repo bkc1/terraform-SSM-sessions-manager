@@ -2,7 +2,7 @@
 
 ## Overview
 
-Simple demo that highlights how to utilize SSM Sessions Manager to connect to an EC2 (Spot) instance in a completely isolated subnet, with no access to the internet(no IGW or NAT). This uses KMS for encryption for the session and for CLoudwatch and S3 logging.  This is accomplished by using VPC endpoints, specifically (Privatelink) interface endpoints and an S3 Gateway endpoint(for logging).
+Simple demo that highlights how to utilize SSM Sessions Manager to connect to an EC2 (Spot) instance in a completely isolated subnet, with no access to the internet(no IGW or NAT). This uses KMS for encryption for the session and for CLoudwatch and S3 logging.  VPC (Privatelink) interface endpoints and an S3 Gateway endpoint are used for the EC2 instance to reach AWS service endpoints.
 
 ### Logging session data
 - As of writing this, APIs for enabling Sessions Manager audit logs to S3/Cloudwatch logs are not currently available and thus this could not be automated with Terraform. This project deploys the resources needed to quickly configure encrypted audit logging to S3 as noted [here](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html)  
@@ -10,7 +10,7 @@ Simple demo that highlights how to utilize SSM Sessions Manager to connect to an
 
 ## Prereqs & Dependencies
 
-This was developed and tested with Terraform v0.14.4, AWScli v2.2.4 & session-manager-plugin v.1.2.245.0
+This was developed and tested with Terraform `v1.0.8`, AWScli `v2.2.4` & session-manager-plugin `v.1.2.245.0`. It is strongly recommended to deploy this is a sandbox or non-production account.
 
 * An AWS-cli configuration with elevated IAM permissions must be in place. The IAM access and secret keys in the AWS-cli are needed by Terraform in this example.
 
@@ -24,15 +24,17 @@ ssh-keygen -t rsa -f ./keys/mykey -N ""
 ```
 brew install session-manager-plugin
 ```
+
 ## Usage
 
 Set the desired AWS region and change any default variables in the `variables.tf` file.
 
 ### Deploying with Terraform
 ```
-terraform init  ## initialize Teraform
-terraform plan  ## Review what terraform will do
+terraform init  ## initialize Terraform
+terraform plan  ## Review what Terraform will do
 terraform apply ## Deploy the resources
+terraform show -json |jq .values.outputs ## See redacted/sensitive Terraform outputs
 ```
 Tear-down the resources in the stack
 ```
