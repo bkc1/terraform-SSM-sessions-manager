@@ -7,6 +7,8 @@
             "Action": "ssm:StartSession",
             "Resource": [
                 "arn:aws:ssm:*::document/AWS-StartSSHSession",
+                "arn:aws:ssm:*::document/AWS-StartInteractiveCommand",
+                "arn:aws:ssm:*::document/AWS-StartPortForwardingSession",
                 "arn:aws:ec2:*:${account_id}:instance/*"
             ]
         },
