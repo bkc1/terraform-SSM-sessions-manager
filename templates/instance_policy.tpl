@@ -27,7 +27,7 @@
             "Action": [
                 "s3:PutObject"
             ],
-            "Resource": "arn:aws:s3:::${bucket}/${region}/*"
+            "Resource": "arn:aws:s3:::${bucket}/*"
         },
         {
             "Effect": "Allow",
